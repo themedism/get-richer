@@ -10,7 +10,7 @@ import StockPrices from "./StockPrices.json";
   c: number;
   highestPriceOfTheDay: number;
   lowestPriceOfTheDay: number;
-  timestamp: number;
+  timestamp: Date;
   n: number;
 } */
 
@@ -26,7 +26,16 @@ const load = async () => {
     await prisma.$queryRaw`ALTER TABLE Stock AUTO_INCREMENT = 1`;
     console.log("Reset stock auto increment to 1");
 
-    await prisma.stock.createMany({ data: StockPrices });
+    //Stroring the four fields only
+    for (let item of StockPrices)
+      await prisma.stock.create({
+        data: {
+          company: item.company,
+          highestPriceOfTheDay: item.highestPriceOfTheDay,
+          lowestPriceOfTheDay: item.lowestPriceOfTheDay,
+          timestamp: new Date(item.timestamp),
+        },
+      });
     console.log("Added stock data...");
   } catch (e) {
     console.error(e);

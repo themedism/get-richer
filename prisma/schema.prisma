@@ -9,14 +9,15 @@ datasource db {
 }
 
 model Stock {
-  id                   Int    @id @default(autoincrement())
+  id                   Int      @id @default(autoincrement())
   company              String
   highestPriceOfTheDay Float
   lowestPriceOfTheDay  Float
-  timestamp            BigInt
-  v                    Float
-  vw                   Float
-  o                    Float
-  c                    Float
-  n                    Int
+  timestamp            DateTime @db.DateTime()
+  //timestamp            BigInt
+  //v                    Float
+  //vw                   Float
+  //o                    Float
+  //c                    Float
+  //n                    Int
 }
